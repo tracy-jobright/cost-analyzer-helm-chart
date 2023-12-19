@@ -10,10 +10,10 @@ data:
     server {
         listen {{ .Values.global.mimirProxy.port }};
         location / {
-          proxy_set_header  X-Scope-OrgID "{{ .Values.global.mimirProxy.orgIdentifier }}";
-          proxy_pass  {{ .Values.global.mimirProxy.mimirEndpoint }};
+          proxy_pass {{ .Values.global.mimirProxy.mimirEndpoint }};
+          proxy_set_header X-Scope-OrgID "{{ .Values.global.mimirProxy.orgIdentifier }}";
           {{- if .Values.global.mimirProxy.basicAuth }}
-          proxy_set_header  Authorization "Basic {{ (printf "%s:%s" .Values.global.mimirProxy.basicAuth.username .Values.global.mimirProxy.basicAuth.password) | b64enc }}";
+          proxy_set_header Authorization "Basic {{ (printf "%s:%s" .Values.global.mimirProxy.basicAuth.username .Values.global.mimirProxy.basicAuth.password) | b64enc }}";
           {{- end }}
         }
     }
